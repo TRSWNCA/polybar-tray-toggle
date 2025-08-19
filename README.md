@@ -162,9 +162,9 @@ Add to your i3 config (`~/.config/i3/config`):
 
 ```bash
 # Toggle applications
-bindsym $mod+w exec --no-startup-id cd /path/to/polybar-tray-toggle && uv run ./main.py wechat
-bindsym $mod+d exec --no-startup-id cd /path/to/polybar-tray-toggle && uv run ./main.py discord
-bindsym $mod+t exec --no-startup-id cd /path/to/polybar-tray-toggle && uv run ./main.py telegram
+bindsym $mod+w exec --no-startup-id bash -c "cd /path/to/polybar-tray-toggle && uv run ./main.py wechat"
+bindsym $mod+q exec --no-startup-id bash -c "cd /path/to/polybar-tray-toggle && uv run ./main.py qq"
+bindsym $mod+d exec --no-startup-id bash -c "cd /path/to/polybar-tray-toggle && uv run ./main.py discord"
 ```
 
 
