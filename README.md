@@ -15,7 +15,7 @@ A smart utility for toggling applications between i3 workspaces and the polybar 
 - **Clean Architecture**: Object-oriented design with modular components
 
 
-## TODOs
+## 📝 TODOs
 
 - [ ] Publish a release version
 - [ ] Support other DEs
