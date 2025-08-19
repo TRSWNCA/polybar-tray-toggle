@@ -5,7 +5,7 @@ A smart utility for toggling applications between i3 workspaces and the polybar 
 ## 🚀 Features
 
 - **Smart Application Detection**: Automatically detects if apps are running, visible in workspaces, or minimized to tray
-- **Intelligent Workspace Management**: 
+- **Intelligent Workspace Management**:
   - Launch apps if not running
   - Move apps between workspaces
   - Hide/show apps using i3 scratchpad
@@ -13,6 +13,14 @@ A smart utility for toggling applications between i3 workspaces and the polybar 
 - **Multi-Application Support**: Built-in support for WeChat, Discord, Telegram, QQ, and easy configuration for custom apps
 - **Flexible Configuration**: JSON-based configuration system with command-line overrides
 - **Clean Architecture**: Object-oriented design with modular components
+
+
+## TODOs
+
+- [ ] Publish a release version
+- [ ] Support other DEs
+- [ ] Full test
+
 
 ## 📋 Requirements
 
@@ -95,7 +103,7 @@ uv run ./main.py --generate-config apps.json
 The following applications are supported out of the box:
 
 - **wechat**: WeChat messaging app
-- **discord**: Discord chat application  
+- **discord**: Discord chat application
 - **telegram**: Telegram desktop client
 - **qq**: QQ messaging app
 
@@ -142,7 +150,7 @@ The application follows this intelligent decision tree:
 
 1. **App Not Launched**: If the app is not visible in the tray → Launch it
 2. **App in Scratchpad**: If the app window is in i3 scratchpad → Show it in current workspace
-3. **App in Current Workspace**: If the app is visible in current workspace → Hide it to scratchpad  
+3. **App in Current Workspace**: If the app is visible in current workspace → Hide it to scratchpad
 4. **App in Other Workspace**: If the app is in a different workspace → Move it to current workspace
 5. **App in Tray Only**: If the app is running but only visible in tray → Click tray icon to restore
 
@@ -159,18 +167,6 @@ bindsym $mod+d exec --no-startup-id cd /path/to/polybar-tray-toggle && uv run ./
 bindsym $mod+t exec --no-startup-id cd /path/to/polybar-tray-toggle && uv run ./main.py telegram
 ```
 
-### Polybar Module
-
-Add a custom polybar module:
-
-```ini
-[module/app-toggle]
-type = custom/script
-exec = echo "󰍩"
-click-left = cd /path/to/polybar-tray-toggle && uv run ./main.py wechat
-click-right = cd /path/to/polybar-tray-toggle && uv run ./main.py discord
-interval = 0
-```
 
 ### Shell Aliases
 
@@ -187,15 +183,18 @@ alias tt='cd /path/to/polybar-tray-toggle && uv run ./main.py telegram'
 ### Common Issues
 
 **App not found in tray**
+
 - Ensure the app is actually running and visible in polybar tray
 - Check the `tray_info` pattern matches the `xwininfo` output
 - Verify polybar tray module is configured correctly
 
 **Window not detected in i3**
+
 - Check `window_class_patterns` and `window_name_patterns` match your app
 - Use `xprop` to inspect window properties: click on the app window after running `xprop`
 
 **Launch commands not working**
+
 - Verify the commands in `launch_commands` are correct and executable
 - Test launch commands manually in terminal
 - Check if the app requires special environment or paths
@@ -238,10 +237,10 @@ To add support for a new application:
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the [MIT License](./LICENSE).
 
 ## 🙏 Acknowledgments
 
 - [i3ipc-python](https://github.com/altdesktop/i3ipc-python) for i3 window manager integration
 - [polybar](https://github.com/polybar/polybar) for the system tray functionality
-- The i3wm community for inspiration and support 
+- The i3wm community for inspiration and support
