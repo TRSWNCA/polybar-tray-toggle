@@ -1,0 +1,9 @@
+[project]
+name = "polybar-tray-toggle"
+version = "0.1.0"
+description = "A utility to toggle applications between workspaces and system tray"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "i3ipc>=2.2.1",
+]
