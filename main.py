@@ -73,19 +73,10 @@ class I3WindowManager:
     
     def _window_matches(self, window: Any, app_config: AppConfig) -> bool:
         """Check if window matches app configuration"""
-        # Check window class
-        if window.window_class:
-            for pattern in app_config.window_class_patterns:
-                if pattern.lower() in window.window_class.lower():
-                    return True
+        is_class_match = window.window_class in app_config.window_class_patterns
+        is_name_match = window.name in app_config.window_name_patterns
         
-        # Check window name
-        if window.name:
-            for pattern in app_config.window_name_patterns:
-                if pattern.lower() in window.name.lower():
-                    return True
-        
-        return False
+        return is_class_match or is_name_match
     
     def move_to_scratchpad(self, window: Any) -> bool:
         """Move window to scratchpad"""
