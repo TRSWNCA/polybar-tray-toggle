@@ -203,8 +203,8 @@ class TrayManager:
         return None
     
     @staticmethod
-    def click_icon(geometry: Dict[str, int]) -> bool:
-        """Simulate mouse click on tray icon"""
+    def click_icon(geometry: Dict[str, int], double_click: bool = False) -> bool:
+        """Simulate mouse click on tray icon with minimal overhead"""
         try:
             # Save original mouse position
             orig_pos = subprocess.run(['xdotool', 'getmouselocation', '--shell'], 
@@ -224,15 +224,17 @@ class TrayManager:
             
             print(f"Clicking tray at ({center_x}, {center_y})")
             
-            subprocess.run(['xdotool', 'mousemove', str(center_x), str(center_y)])
-            time.sleep(0.1)
-            subprocess.run(['xdotool', 'click', '1'])
-            
-            # Restore mouse position
+            # Build a single xdotool invocation to move, click (single or double), and restore
+            cmd = ['xdotool', 'mousemove', '--sync', str(center_x), str(center_y)]
+            if double_click:
+                cmd += ['click', '--repeat', '2', '--delay', '60', '1']
+            else:
+                cmd += ['click', '1']
             if orig_x is not None and orig_y is not None:
-                subprocess.run(['xdotool', 'mousemove', str(orig_x), str(orig_y)])
+                cmd += ['mousemove', str(orig_x), str(orig_y)]
             
-            return True
+            result = subprocess.run(cmd)
+            return result.returncode == 0
         except Exception as e:
             print(f"Error clicking tray icon: {e}")
             return False
@@ -321,9 +323,9 @@ class AppToggler:
         """Click tray icon for the app"""
         geometry = self.tray_mgr.find_icon_geometry(app_config.tray_info)
         if geometry:
-            success = self.tray_mgr.click_icon(geometry)
+            success = self.tray_mgr.click_icon(geometry, double_click=True)
             if success:
-                time.sleep(0.5)  # Wait for window to appear
+                time.sleep(0.2)  # Wait briefly for window to appear
             return success
         return False
 
